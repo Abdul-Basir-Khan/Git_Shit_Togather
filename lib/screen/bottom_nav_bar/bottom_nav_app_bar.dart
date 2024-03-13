@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get_shit_together/screen/bottom_nav_bar/calender_view/calender_view.dart';
+import 'package:get_shit_together/screen/bottom_nav_bar/habbit/habbit.dart';
+import 'package:get_shit_together/screen/bottom_nav_bar/home_screen/create_new_task.dart';
+import 'package:get_shit_together/screen/bottom_nav_bar/payment_screen/add_card.dart';
+import 'package:get_shit_together/screen/bottom_nav_bar/profile_setting_screen/profile_setting.dart';
+import 'package:get_shit_together/screen/bottom_nav_bar/progress_screen/progress_screen.dart';
 import 'package:svg_flutter/svg.dart';
-
 import '../../themes/app_colors.dart';
+import '../list_of_all_screens/list_of_screens.dart';
 import 'home_screen/home_screen.dart';
 
+
+
+
 class BottomNavAppBar extends StatefulWidget {
-  const BottomNavAppBar({super.key});
+  final int currentIndex;
+  const BottomNavAppBar({super.key,  this.currentIndex = 0});
 
   @override
   State<BottomNavAppBar> createState() => _BottomNavAppBarState();
@@ -33,111 +43,30 @@ class _BottomNavAppBarState extends State<BottomNavAppBar> {
     });
   }
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final List<String> itemList = [
-    'Home',
-    'Profile Setting',
-    'Add Tasks',
-    'My Tasks',
-    'Progress',
-    'Calender view',
-    'Habits',
-    'Subscription',
-  ];
-  final List<String> icons = [
-    'assets/icon/drawer/home-2.svg',
-    'assets/icon/drawer/profile-2user.svg',
-    'assets/icon/drawer/Group 882.svg',
-    'assets/icon/drawer/tick-square.svg',
-    'assets/icon/drawer/cup.svg',
-    'assets/icon/drawer/uit_calender.svg',
-    'assets/icon/drawer/uit_calender.svg',
-    'assets/icon/drawer/Vector.svg',
-  ];
 
 
+final List pages = [
+  const HomeScreen(),
+  const CalenderView(),
+  const HabitScreen(),
+];
+@override
+  void initState() {
+  _currentIndex = widget.currentIndex;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: Drawer(
-        width: MediaQuery.of(context).size.width * 0.75,
-        child: Container(
-          padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top, left: 10, right: 10),
-          color: const Color(0xffE8E8E8), // Background color
-          child: ListView(
-            children: [
-              const Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: AppColors.primaryBrown,
-                    child: Text(
-                      "M",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        height: 0,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    'Name',
-                    style: TextStyle(
-                      color: Color(0xFF695B5B),
-                      fontSize: 12,
-                      fontFamily: 'Domine',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    Icons.keyboard_arrow_down,
-                    color: AppColors.primaryBlack,
-                  )
-                ],
-              ),
-              const SizedBox(height: 20,),
-              ...List.generate(
-                icons.length,
-                    (index) => ListTile(
-                  onTap: (){
-                    setState(() {
-                      _currentIndex=index;
-                      Navigator.pop(context);
-                  });
-                  },
-                  leading: SvgPicture.asset(icons[index].toString()),
-                  title: Text(
-                    itemList[index].toString(),
-                    style: const TextStyle(
-                      color: Color(0xFF695B5B),
-                      fontSize: 16,
-                      fontFamily: 'Domine',
-                      fontWeight: FontWeight.w400,
-                      letterSpacing: 0.20,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      drawer: const CustomDrawer(),
       appBar: AppBar(
-        elevation: 0,backgroundColor: Color(0xffE8E8E8),
+        elevation: 0,backgroundColor: const Color(0xffE8E8E8),
         leading: const Padding(
           padding: EdgeInsets.only(top: 10,left: 10),
-          child: Image(image: AssetImage("assets/icon/bottom_nav/Get 1.png"),),
+          child: Image(
+
+            image: AssetImage("assets/icon/bottom_nav/Get 1.png"),),
         ),
         actions: [
           GestureDetector(
@@ -146,15 +75,18 @@ class _BottomNavAppBarState extends State<BottomNavAppBar> {
                  _scaffoldKey.currentState!.openDrawer();
                 });
               },
-              child: SvgPicture.asset("assets/icon/bottom_nav/Vector.svg")),const SizedBox(width: 10,)
+              child: SvgPicture.asset(
+                  height: 25,width: 25,
+                  "assets/icon/bottom_nav/Vector.svg")),const SizedBox(width: 10,)
         ],
       ),
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xffE8E8E8),
-      body: _currentIndex==0?HomeScreen():Container(),
+body: pages[_currentIndex],
+
       bottomNavigationBar: BottomAppBar(
-        surfaceTintColor:Color(0xffE8E8E8),
-        color: Color(0xffE8E8E8),
+        surfaceTintColor:const Color(0xffE8E8E8),
+        color: const Color(0xffE8E8E8),
         padding: EdgeInsets.zero,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
@@ -176,6 +108,7 @@ class _BottomNavAppBarState extends State<BottomNavAppBar> {
               (index) => BottomTab(
                 onTap: () {
                   onTabTapped(index);
+
                 },
                 color: _currentIndex == index
                     ? AppColors.primaryWhite
@@ -246,3 +179,108 @@ class BottomModel {
 }
 
 
+class CustomDrawer extends StatelessWidget {
+  const CustomDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      width: MediaQuery.of(context).size.width * 0.75,
+      child: Container(
+        padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top, left: 10, right: 10),
+        color: const Color(0xffE8E8E8), // Background color
+        child: ListView(
+          children: [
+            const Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  backgroundColor: AppColors.primaryBrown,
+                  child: Text(
+                    "M",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                      height: 0,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  'Name',
+                  style: TextStyle(
+                    color: Color(0xFF695B5B),
+                    fontSize: 12,
+                    fontFamily: 'Domine',
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Icon(
+                  Icons.keyboard_arrow_down,
+                  color: AppColors.primaryBlack,
+                )
+              ],
+            ),
+            const SizedBox(height: 20,),
+            ...List.generate(
+              iconsForBottomNavBar.length,
+                  (index) => ListTile(
+                onTap: (){
+                  if(index == 0 || index == 5 || index==6){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
+                      return BottomNavAppBar(currentIndex: index== 0 ? 0 : index == 5 ? 1 :  index == 6 ? 2:index,);
+                    }));
+                  } else if(index == 4){
+                    Navigator.pop(context);
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
+                      return const ProgressScreen();
+                    }));
+                  }
+                  else if(index == 1){
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                      return const ProfileSetting();
+                    }));
+                  }
+                  else if(index == 2){
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                      return const CreateNewTask();
+                    }));
+                  }
+                  else if(index == 7){
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                      return const AddCardScreen();
+                    }));
+                  }
+                },
+                leading: SvgPicture.asset(iconsForBottomNavBar[index].toString()),
+                title: Text(
+                  itemListForBottomNavBar[index].toString(),
+                  style: const TextStyle(
+                    color: Color(0xFF695B5B),
+                    fontSize: 16,
+                    fontFamily: 'Domine',
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 0.20,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

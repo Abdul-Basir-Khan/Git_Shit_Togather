@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+import 'package:get_shit_together/screen/landing_screen/landing_screen.dart';
 import '../../themes/app_colors.dart';
 class PriceScreen extends StatelessWidget {
-  const PriceScreen({super.key});
+
+  const PriceScreen({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -70,28 +72,33 @@ class PriceScreen extends StatelessWidget {
         ),
         const SizedBox(height: 20,),
         Row(crossAxisAlignment: CrossAxisAlignment.center,children: [
-          Container(
-            width:MediaQuery.sizeOf(context).width*0.45,
-            height: 48,
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            decoration: const ShapeDecoration(
-              color: Color(0xFFB59C9C),
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  width: 1,
-                  strokeAlign: BorderSide.strokeAlignOutside,
+          GestureDetector(
+            onTap: (){
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LandingScreen()));
+            },
+            child: Container(
+              width:MediaQuery.sizeOf(context).width*0.45,
+              height: 48,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              decoration: const ShapeDecoration(
+                color: Color(0xFFB59C9C),
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    width: 1,
+                    strokeAlign: BorderSide.strokeAlignOutside,
+                  ),
                 ),
               ),
-            ),
-            child: const Center(
-              child: Text(
-                'Get Started',
-                style: TextStyle(
-                  color: Color(0xFFE7E7E7),
-                  fontSize: 16,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w400,
-                  height: 0.09,
+              child: const Center(
+                child: Text(
+                  'Get Started',
+                  style: TextStyle(
+                    color: Color(0xFFE7E7E7),
+                    fontSize: 16,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w400,
+                    height: 0.09,
+                  ),
                 ),
               ),
             ),

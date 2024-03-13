@@ -1,9 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get_shit_together/dialog/calender_dialog.dart';
+import 'package:get_shit_together/dialog/preority_dialog.dart';
+import 'package:get_shit_together/dialog/status_dialog.dart';
 import 'package:svg_flutter/svg.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../../../themes/app_colors.dart';
 import '../../../themes/app_text_styles.dart';
+import '../bottom_nav_app_bar.dart';
 
 
 class CreateNewTask extends StatefulWidget {
@@ -20,22 +24,35 @@ class _CreateNewTaskState extends State<CreateNewTask> {
     'Edit',
     'Delete',
   ];
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffE8E8E8),
+      key: _scaffoldKey,
+      drawer: CustomDrawer(),
+      backgroundColor: Color(0xffE8E8E8),
       appBar: AppBar(
-        elevation: 0,backgroundColor: const Color(0xffE8E8E8),
+        elevation: 0,backgroundColor: Color(0xffE8E8E8),
         leading: const Padding(
           padding: EdgeInsets.only(top: 10,left: 10),
-          child: Image(image: AssetImage("assets/icon/bottom_nav/Get 1.png"),),
+          child: Image(
+
+            image: AssetImage
+
+            (
+
+              "assets/icon/bottom_nav/Get 1.png"),),
         ),
         actions: [
           GestureDetector(
               onTap: () {
-
+                setState(() {
+                  _scaffoldKey.currentState!.openDrawer();
+                });
               },
-              child: SvgPicture.asset("assets/icon/bottom_nav/Vector.svg")),const SizedBox(width: 10,)
+              child: SvgPicture.asset(
+                  height:25,width:25,
+                  "assets/icon/bottom_nav/Vector.svg")),const SizedBox(width: 10,)
         ],
       ),
       body: ListView(
@@ -134,63 +151,97 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: MediaQuery.sizeOf(context).width*0.25,
+                  GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        showDialog(context: context, builder: (BuildContext context) { return   CalenderDialog();
+                        },
+                        );
+                      }
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width*0.25,
 
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                      color: const Color(0xFFA66D82),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(17),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      clipBehavior: Clip.antiAlias,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFA66D82),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(17),
+                        ),
                       ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Due Date',
-                        style: AppTextStyles.domineStyle.copyWith(  color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,)
+                      child: Center(
+                        child: Text(
+                            'Due Date',
+                            style: AppTextStyles.domineStyle.copyWith(  color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,)
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.sizeOf(context).width*0.25,
+                  GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        showDialog(
+                          context: context, builder: (BuildContext context) {
+                          return PreorityDialog();
+                        },
+                        );
+                      }
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width*0.25,
 
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                      color: const Color(0xFFA66D82),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(17),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      clipBehavior: Clip.antiAlias,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFA66D82),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(17),
+                        ),
                       ),
-                    ),
-                    child: Center(
-                      child: Text(
-                          'Priority',
-                          style: AppTextStyles.domineStyle.copyWith(  color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,)
+                      child: Center(
+                        child: Text(
+                            'Priority',
+                            style: AppTextStyles.domineStyle.copyWith(  color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,)
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.sizeOf(context).width*0.25,
+                  GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        showDialog(
+                          context: context, builder: (BuildContext context) {
+                          return StatusDialog();
+                        },
+                        );
+                      }
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width*0.25,
 
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                      color: const Color(0xFFA66D82),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(17),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      clipBehavior: Clip.antiAlias,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFA66D82),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(17),
+                        ),
                       ),
-                    ),
-                    child: Center(
-                      child: Text(
-                          'Status',
-                          style: AppTextStyles.domineStyle.copyWith(  color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,)
+                      child: Center(
+                        child: Text(
+                            'Status',
+                            style: AppTextStyles.domineStyle.copyWith(  color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,)
+                        ),
                       ),
                     ),
                   ),
@@ -304,43 +355,67 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                       ),
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.sizeOf(context).width*0.25,
+                  GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        showDialog(
+                          context: context, builder: (BuildContext context) {
+                          return PreorityDialog();
+                        },
+                        );
+                      }
+                        );
+                      },
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width*0.25,
 
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                      color: const Color(0xFFA66D82),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(17),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      clipBehavior: Clip.antiAlias,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFA66D82),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(17),
+                        ),
                       ),
-                    ),
-                    child: Center(
-                      child: Text(
-                          'Priority',
-                          style: AppTextStyles.domineStyle.copyWith(  color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,)
+                      child: Center(
+                        child: Text(
+                            'Priority',
+                            style: AppTextStyles.domineStyle.copyWith(  color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,)
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.sizeOf(context).width*0.25,
+                  GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        showDialog(
+                          context: context, builder: (BuildContext context) {
+                          return StatusDialog();
+                        },
+                        );
+                      }
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width*0.25,
 
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                      color: const Color(0xFFA66D82),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(17),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      clipBehavior: Clip.antiAlias,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFA66D82),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(17),
+                        ),
                       ),
-                    ),
-                    child: Center(
-                      child: Text(
-                          'Status',
-                          style: AppTextStyles.domineStyle.copyWith(  color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,)
+                      child: Center(
+                        child: Text(
+                            'Status',
+                            style: AppTextStyles.domineStyle.copyWith(  color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,)
+                        ),
                       ),
                     ),
                   ),

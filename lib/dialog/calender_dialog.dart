@@ -84,7 +84,9 @@ class _CalenderDialogState extends State<CalenderDialog> {
                 decoration: BoxDecoration(
                     border: Border.all(color: AppColors.primaryBlack)
                 ),
-                child: SfCalendar(
+                child:
+
+                SfCalendar(
                              headerDateFormat: 'MMMM',
                   headerStyle: const CalendarHeaderStyle(
                     textAlign: TextAlign.center

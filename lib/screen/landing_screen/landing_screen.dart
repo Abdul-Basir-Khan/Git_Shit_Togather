@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
 import 'package:svg_flutter/svg.dart';
-
 import '../../themes/app_colors.dart';
 import '../../themes/app_text_styles.dart';
 import '../../widgets/custom_buttom.dart';
@@ -29,7 +28,6 @@ class _LandingScreenState extends State<LandingScreen> {
     'assets/image/landing_screen/Vector3.svg',
     'assets/image/landing_screen/Vector4.svg',
   ];
-
   @override
   void dispose() {
     _pageController.dispose();
@@ -59,10 +57,11 @@ class _LandingScreenState extends State<LandingScreen> {
                   Icon(
                     Icons.menu,
                     color: AppColors.primaryBlack,
-                  )
+                  ),
+                  SizedBox(width: 10,),
                 ],
               ),
-              _isPrice==false?
+            _isPrice==false?
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -90,7 +89,7 @@ class _LandingScreenState extends State<LandingScreen> {
                         GestureDetector(
                           onTap: (){
                             setState(() {
-                              _isPrice=!_isPrice;
+                            _isPrice=!_isPrice;
                             });
                           },
                           child: Text(
@@ -1264,7 +1263,6 @@ class _LandingScreenState extends State<LandingScreen> {
                 ],
               )
                   :_isAbout==true?const AboutUsScreen():const SizedBox(),
-
                   _isAbout==false
                       ?
                   Column(
@@ -1367,7 +1365,9 @@ class _LandingScreenState extends State<LandingScreen> {
                   )
                       :const SizedBox()
                 ],
-              ):const PriceScreen(),
+              )
+                  : PriceScreen( ),
+
               _isAbout==true||_isAbout==false ||_isPrice==true?
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -1521,7 +1521,8 @@ class _LandingScreenState extends State<LandingScreen> {
                     height: 10,
                   ),
                 ],),
-              ):const SizedBox(),
+              )
+                  :const SizedBox(),
 
 
             ],
